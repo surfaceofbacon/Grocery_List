@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Grocery List</title>
+
 </head>
 <body>
+
     <h1>Grocery List</h1>
+    <h4>There are {{amount_in_list}} items on the list</h4>
     <ul>
         {% for entry in groceries_list %}
             <li>{{ entry }}</li>
         {% endfor %}
     </ul>
+
 </body>
 </html>
