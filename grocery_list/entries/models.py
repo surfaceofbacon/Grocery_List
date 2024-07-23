@@ -17,7 +17,11 @@ class GroceryEntry(models.Model):
     store = models.CharField(max_length=50, blank=True, null=True)
 
     def __repr__(self):
+        if self.unit != None:
+            return f'{self.quantity} {self.unit} of {self.name}'
         return f'{self.quantity} {self.name}'
 
     def __str__(self):
+        if self.unit != None:
+            return f'{self.quantity} {self.unit} of {self.name}'
         return f'{self.quantity} {self.name}'
