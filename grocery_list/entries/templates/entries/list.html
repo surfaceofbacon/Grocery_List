@@ -1,19 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Grocery List</title>
+{% extends 'base.html' %}
 
-</head>
-<body>
+{% block title %} None Default {% endblock %}
 
+{% block body %}
     <h1>Grocery List</h1>
+    <form method="post" action="/">
+        {% csrf_token %}
+        <div>
+            <label for="name">Name</label>
+            <input required type="text" id="name" name="name"/>
+        </div>
+        <div>
+            <label for="importance_color">Priority</label>
+            <select id="importance_color" name="importance_color">
+                <option value="G">Green</option>
+                <option value="Y">Yellow</option>
+                <option value="R">Red</option>
+            </select>
+        </div>
+        <div>
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity"/>
+        </div>
+        <div>
+            <label for="unit">Unit</label>
+            <input type="text" id="unit" name="unit"/>
+        </div>
+        <div>
+            <label for="brand">Brand</label>
+            <input type="text" id="brand" name="brand"/>
+        </div>
+        <div>
+            <label for="store">Store</label>
+            <input type="text" id="store" name="store"/>
+        </div>
+        <div>
+            <button type="submit" name="submit">Submit</button>
+        </div>
+    </form>
     <h4>There are {{amount_in_list}} items on the list</h4>
     <ul>
         {% for entry in groceries_list %}
-            <li>{{ entry }}</li>
+        <li>{{ entry }}</li>
         {% endfor %}
     </ul>
 
-</body>
-</html>
+{% endblock %}
