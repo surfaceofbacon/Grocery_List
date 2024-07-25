@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} {{name}} {% endblock %}
+
+{% block body %}
+    <h1>{{name}}</h1>
+
+    <ul>
+        <li>Amount: {{quantity}}</li>
+        <li>Priority: {{importance_color}}</li>
+        <li>Unit: {{unit}}</li>
+        <li>Brand: {{brand}}</li>
+        <li>Store: {{store}}</li>
+    </ul>
+
+{% endblock %}
