@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import GroceryEntry
+from .models import GroceryEntry, Store
 # Create your views here.
 
 
@@ -13,14 +13,15 @@ def get_all_grocery_entries(request):
         obj.importance_color = request.POST.get('importance_color')
         obj.unit = request.POST.get('unit')
         obj.brand = request.POST.get('brand')
-        obj.store = request.POST.get('store')
+        obj.store_id = request.POST.get('store') or None
         obj.save()
-
+    stores_data = Store.objects.all()
     list_data = GroceryEntry.objects.all()
     amount = GroceryEntry.objects.count()
     context = {
         'groceries_list': list_data,
-        'amount_in_list': amount
+        'amount_in_list': amount,
+        'stores': stores_data
     }
     return render(request, 'entries/list.html', context)
 
@@ -29,15 +30,14 @@ def get_single_entry(request, entry_id):
     name = entry.name or None
     quantity = entry.quantity or None
     importance_color = entry.importance_color or None
+    color_code = GroceryEntry.importance_color_choices.get(importance_color)
     unit = entry.unit or None
     brand = entry.brand or None
-    store = entry.brand or None
+    store = entry.store or None
     context = {
-        'entry_id': entry_id,
-        'entry': entry,
         'name': name,
         'quantity': quantity,
-        'importance_color': importance_color,
+        'importance_color': color_code,
         'unit': unit,
         'brand': brand,
         'store': store
