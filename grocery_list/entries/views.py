@@ -5,14 +5,17 @@ from .models import GroceryEntry, Store
 
 def get_all_grocery_entries(request):
     if request.method == 'POST':
+        name = request.POST.get('name')
+        if GroceryEntry.objects.filter(name=name):
+            GroceryEntry.objects.filter(name=name).delete()
         obj = GroceryEntry()
         obj.name = request.POST.get('name')
         obj.quantity = request.POST.get('quantity')
         if obj.quantity == "":
-            obj.quantity = None
-        obj.importance_color = request.POST.get('importance_color')
-        obj.unit = request.POST.get('unit')
-        obj.brand = request.POST.get('brand')
+            obj.quantity = 1
+        obj.importance_color = request.POST.get('importance_color') or None
+        obj.unit = request.POST.get('unit') or None
+        obj.brand = request.POST.get('brand') or None
         obj.store_id = request.POST.get('store') or None
         obj.save()
     stores_data = Store.objects.all()
@@ -44,3 +47,32 @@ def get_single_entry(request, entry_id):
     }
     return render(request, 'entries/entry.html', context)
 
+def get_all_stores(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        if Store.objects.filter(name=name):
+            Store.objects.filter(name=name).delete()
+        else:
+            obj = Store()
+            obj.name = name
+            obj.save()
+
+    stores_data = Store.objects.all()
+    amount = Store.objects.count()
+    context = {
+        'stores_data': stores_data,
+        'amount': amount
+    }
+
+    return render(request, 'entries/stores.html', context)
+
+def get_single_store(request, store_id):
+    entry = Store.objects.filter(id=store_id)[0]
+    name = entry.name or None
+    items_in_store = GroceryEntry.objects.filter(store=entry)
+    context = {
+        'store': entry,
+        'name': name,
+        'items': items_in_store
+    }
+    return render(request, 'entries/store.html', context)

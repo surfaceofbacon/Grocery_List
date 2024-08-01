@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import get_all_grocery_entries, get_single_entry
+from .views import get_all_grocery_entries, get_single_entry, get_single_store, get_all_stores
 urlpatterns = [
     path('', get_all_grocery_entries, name='get-all-grocery-entries'),
-    path("<int:entry_id>/", get_single_entry, name='get-single-entry')
-
+    path("<int:entry_id>/", get_single_entry, name='get-single-entry'),
+    path('stores', get_all_stores, name='get-all-stores'),
+    path("<int:store_id>", get_single_store, name='get-single-store')
 ]
