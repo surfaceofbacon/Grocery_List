@@ -29,7 +29,7 @@ def get_all_grocery_entries(request):
     return render(request, 'entries/list.html', context)
 
 def get_single_entry(request, entry_id):
-    entry = GroceryEntry.objects.all()[entry_id - 1]
+    entry = GroceryEntry.objects.all().filter(id=entry_id)[0]
     name = entry.name or None
     quantity = entry.quantity or None
     importance_color = entry.importance_color or None
@@ -67,11 +67,11 @@ def get_all_stores(request):
     return render(request, 'entries/stores.html', context)
 
 def get_single_store(request, store_id):
-    entry = Store.objects.filter(id=store_id)[0]
-    name = entry.name or None
-    items_in_store = GroceryEntry.objects.filter(store=entry)
+    entry_store = Store.objects.filter(id=store_id)[0]
+    name = entry_store.name or None
+    items_in_store = GroceryEntry.objects.filter(store=entry_store)
     context = {
-        'store': entry,
+        'store': entry_store,
         'name': name,
         'items': items_in_store
     }

@@ -7,7 +7,7 @@
 <h1>items found at {{store}}</h1>
 <ul>
     {% for item in items %}
-    <li>{{ item }}</li>
+    <li>{{ item }}<span class="importance-color" style="background-color: {{item.get_color}}"></span></li>
     {% endfor %}
 </ul>
 
