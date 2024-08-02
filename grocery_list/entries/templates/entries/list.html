@@ -1,53 +1,86 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} None Default {% endblock %}
+{% block head %}
+<script defer src="{% static 'entries/js/script.js' %}">
 
+</script>
+{% endblock %}
 {% block body %}
-<h1>Grocery List</h1>
-<form method="post" action="/">
-    {% csrf_token %}
-    <div>
-        <label for="name">Name</label>
-        <input required type="text" id="name" name="name"/>
+<div class="row">
+    <div class="col-12 my-2">
+        <h1>Grocery List</h1>
     </div>
-    <div>
-        <label for="importance_color">Priority</label>
-        <select id="importance_color" name="importance_color">
-            <option value="G">Green</option>
-            <option value="Y">Yellow</option>
-            <option value="R">Red</option>
-        </select>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6">
+        <form method="post" action="/">
+            <div class="row g-3">
+                <div class="col-12"><label class="form-label" for="name">Name</label>
+                    <input class="form-control" required type="text" id="name" name="name"/>
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label" for="importance_color">Priority</label>
+                    <select class="form-select" id="importance_color" name="importance_color">
+                        <option value="G">Green</option>
+                        <option value="Y">Yellow</option>
+                        <option value="R">Red</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="quantity">Quantity</label>
+                    <input class="form-control" type="number" id="quantity" name="quantity"/>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="unit">Unit</label>
+                    <input class="form-control" type="text" id="unit" name="unit"/>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="brand">Brand</label>
+                    <input class="form-control" type="text" id="brand" name="brand"/>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="store">Store</label>
+                    <select class="form-select" id="store" name="store">
+                        {% for store in stores %}
+                        <option value="{{store.id}}">{{store.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-6 d-flex align-items-end">
+                    <button style="height: 3rem" class="btn btn-primary" type="submit" name="submit">Submit</button>
+                </div>
+            </div>
+            {% csrf_token %}
+        </form>
     </div>
-    <div>
-        <label for="quantity">Quantity</label>
-        <input type="number" id="quantity" name="quantity"/>
-    </div>
-    <div>
-        <label for="unit">Unit</label>
-        <input type="text" id="unit" name="unit"/>
-    </div>
-    <div>
-        <label for="brand">Brand</label>
-        <input type="text" id="brand" name="brand"/>
-    </div>
-    <div>
-        <label for="store">Store</label>
-        <select id="store" name="store">
-            {% for store in stores %}
-                <option value="{{store.id}}">{{store.name}}</option>
+    <div class="col-12 col-md-6">
+        <a class="btn btn-primary my-4" href="/stores">List of Stores</a>
+        <h4>There are {{amount_in_list}} items on the list</h4>
+        <label class="form-label" for="color-filter">Priority</label>
+        <div class="row">
+            <div class="col-6">
+                <select class="form-select" id="color-filter">
+                    <option value="G">Green</option>
+                    <option value="Y">Yellow</option>
+                    <option value="R">Red</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-primary" id="Submit-Priority">Submit Priority</button>
+            </div>
+        </div>
+
+        <ul id="groceries-list">
+            {% for entry in groceries_list %}
+            <li><a href="{% url 'get-single-entry' entry.id %}">{{ entry }} <span data-value="{{entry.importance_color}}" class="importance-color"
+                                                                                  style="background-color: {{entry.get_color}}"></span></a>
+            </li>
             {% endfor %}
-        </select>
+        </ul>
     </div>
-    <div>
-        <button type="submit" name="submit">Submit</button>
-    </div>
-</form>
-<a href="/stores">List of Stores</a>
-<h4>There are {{amount_in_list}} items on the list</h4>
-<ul>
-    {% for entry in groceries_list %}
-    <li><a href="{% url 'get-single-entry' entry.id %}">{{ entry }} <span class="importance-color" style="background-color: {{entry.get_color}}"></span></a></li>
-    {% endfor %}
-</ul>
+</div>
 
 {% endblock %}
