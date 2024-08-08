@@ -7,21 +7,24 @@
 <h2>Would you like to add a store?</h2>
 <form method="post" action="/stores" >
     {% csrf_token %}
-    <div>
+    <div class="col-2">
         <label for="name">Name</label>
-        <input required type="text" id="name" name="name">
+        <input class="form-control" required type="text" id="name" name="name">
     </div>
     <div>
-        <button type="submit" name="Submit">Submit</button>
+        <button class="btn btn-primary" type="submit" name="Submit">Submit</button>
     </div>
 
 </form>
 <h4>{{amount}} store(s) saved</h4>
-<ul>
+<div class="col-2">
+    <ul class="list-group">
     {% for store in stores_data %}
-    <li><a href="{% url 'get-single-store' store.id %}">{{ store }}</a></li>
+    <li class="list-group-item"><a class="btn" href="{% url 'get-single-store' store.id %}">{{ store }}</a></li>
     {% endfor %}
 </ul>
+</div>
 
+    <a class="btn btn-primary my-4" href="{% url 'get-all-grocery-entries'%}">home</a>
 
 {% endblock %}

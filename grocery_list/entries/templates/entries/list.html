@@ -71,13 +71,15 @@
             </div>
         </div>
 
-        <ul id="groceries-list">
+        <div class="col-6">
+            <ul class="list-group" id="groceries-list">
             {% for entry in groceries_list %}
-            <li><a href="{% url 'get-single-entry' entry.id %}">{{ entry }} <span data-value="{{entry.importance_color}}" class="importance-color"
+            <li class="list-group-item"><a class="btn" href="{% url 'get-single-entry' entry.id %}">{{ entry }} <span data-value="{{entry.importance_color}}" class="importance-color"
                                                                                   style="background-color: {{entry.get_color}}"></span></a>
             </li>
             {% endfor %}
         </ul>
+        </div>
     </div>
 </div>
 
