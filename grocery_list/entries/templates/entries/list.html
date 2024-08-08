@@ -45,7 +45,7 @@
                     <label class="form-label" for="store">Store</label>
                     <select class="form-select" id="store" name="store">
                         {% for store in stores %}
-                        <option value="{{store.id}}">{{store.name}}</option>
+                        <option value="{% url 'get-single-store' store.id %}">{{store.name}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -63,13 +63,11 @@
         <div class="row">
             <div class="col-6">
                 <select class="form-select" id="color-filter">
+                    <option value="No Filter">No Filter</option>
                     <option value="G">Green</option>
                     <option value="Y">Yellow</option>
                     <option value="R">Red</option>
                 </select>
-            </div>
-            <div class="col-6">
-                <button class="btn btn-primary" id="Submit-Priority">Submit Priority</button>
             </div>
         </div>
 

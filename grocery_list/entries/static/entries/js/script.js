@@ -1,7 +1,6 @@
-const filterButtonEl = document.querySelector('#Submit-Priority')
+const filterColorSelectEl = document.querySelector('#color-filter')
 
 function filterListItems() {
-    const filterColorSelectEl = document.querySelector('#color-filter')
     const selectedOption = filterColorSelectEl.value
     const groceryEntries = document.querySelectorAll('#groceries-list li')
     function hideIfNotColor(e) {
@@ -10,9 +9,13 @@ function filterListItems() {
         if (elementColorValue !== selectedOption) e.hidden = true
         else e.hidden = false
     }
-    groceryEntries.forEach(hideIfNotColor)
+    function showItems(j) {
+        j.hidden = false
+    }
+    if (selectedOption !== "No Filter") groceryEntries.forEach(hideIfNotColor)
+    else groceryEntries.forEach(showItems)
 }
 
-filterButtonEl.addEventListener('click', filterListItems)
+filterColorSelectEl.addEventListener('change', filterListItems)
 
 
