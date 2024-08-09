@@ -4,3 +4,11 @@
     display: inline-block;
     height: 15px;
 }
+
+
+.entry-btn {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    line-height: 18px
+}
