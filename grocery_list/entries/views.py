@@ -5,19 +5,29 @@ from .models import GroceryEntry, Store
 
 def get_all_grocery_entries(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        if GroceryEntry.objects.filter(name=name):
-            GroceryEntry.objects.filter(name=name).delete()
-        obj = GroceryEntry()
-        obj.name = request.POST.get('name')
-        obj.quantity = request.POST.get('quantity')
-        if obj.quantity == "":
-            obj.quantity = 1
-        obj.importance_color = request.POST.get('importance_color') or None
-        obj.unit = request.POST.get('unit') or None
-        obj.brand = request.POST.get('brand') or None
-        obj.store_id = request.POST.get('store') or None
-        obj.save()
+        form_type = request.POST.get('form-type')
+        if form_type == 'entry-form':
+            entry_id = request.POST.get('entry')
+            entry = GroceryEntry.objects.get(pk=entry_id)
+            entry.purchased = not entry.purchased
+            entry.save()
+        elif form_type == 'delete':
+            GroceryEntry.objects.filter(purchased=True).delete()
+
+        elif form_type == 'check':
+            name = request.POST.get('name')
+            if GroceryEntry.objects.filter(name=name):
+                GroceryEntry.objects.filter(name=name).delete()
+            obj = GroceryEntry()
+            obj.name = request.POST.get('name')
+            obj.quantity = request.POST.get('quantity')
+            if obj.quantity == "":
+                obj.quantity = 1
+            obj.importance_color = request.POST.get('importance_color') or None
+            obj.unit = request.POST.get('unit') or None
+            obj.brand = request.POST.get('brand') or None
+            obj.store_id = request.POST.get('store') or None
+            obj.save()
     stores_data = Store.objects.all()
     list_data = GroceryEntry.objects.all()
     amount = GroceryEntry.objects.count()
