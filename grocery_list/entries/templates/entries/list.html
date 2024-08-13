@@ -46,7 +46,7 @@
                         <label class="form-label" for="store">Store</label>
                         <select class="form-select" id="store" name="store">
                             {% for store in stores %}
-                                <option value="{% url 'get-single-store' store.id %}">{{ store.name }}</option>
+                                <option value="{{ store.id }}">{{ store.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -67,7 +67,7 @@
                 </form>
             </div>
             <div>
-                <a class="btn btn-primary my-4" href="/stores">List of Stores</a>
+                <a class="btn btn-primary my-4" href="{%  url 'get-all-stores' %}">List of Stores</a>
             </div>
             
             <h4>There are {{ amount_in_list }} items on the list</h4>

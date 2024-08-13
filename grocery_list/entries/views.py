@@ -6,7 +6,7 @@ from .models import GroceryEntry, Store
 def get_all_grocery_entries(request):
     if request.method == 'POST':
         form_type = request.POST.get('form-type')
-        if form_type == 'entry-form':
+        if form_type == 'check':
             entry_id = request.POST.get('entry')
             entry = GroceryEntry.objects.get(pk=entry_id)
             entry.purchased = not entry.purchased
@@ -14,12 +14,9 @@ def get_all_grocery_entries(request):
         elif form_type == 'delete':
             GroceryEntry.objects.filter(purchased=True).delete()
 
-        elif form_type == 'check':
-            name = request.POST.get('name')
-            if GroceryEntry.objects.filter(name=name):
-                GroceryEntry.objects.filter(name=name).delete()
+        elif form_type == 'entry-form':
             obj = GroceryEntry()
-            obj.name = request.POST.get('name')
+            obj.name = request.POST.get('entry_name')
             obj.quantity = request.POST.get('quantity')
             if obj.quantity == "":
                 obj.quantity = 1
@@ -77,7 +74,7 @@ def get_all_stores(request):
     return render(request, 'entries/stores.html', context)
 
 def get_single_store(request, store_id):
-    entry_store = Store.objects.filter(id=store_id)[0]
+    entry_store = Store.objects.filter(id=store_id)
     name = entry_store.name or None
     items_in_store = GroceryEntry.objects.filter(store=entry_store)
     context = {
