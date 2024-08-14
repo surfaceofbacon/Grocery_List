@@ -89,7 +89,7 @@
 
                         <li class="list-group-item">
                             <div class="entry-btn">
-                                <div>
+                                <div data-color="{{ entry.importance_color }}">
                                     {% include 'entries/icons/importance_color.html' with width="20px" height="20px" color=entry.get_color %}
                                 </div>
                                 <a class="btn" href="{% url 'get-single-entry' entry.id %}">

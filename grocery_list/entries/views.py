@@ -74,7 +74,7 @@ def get_all_stores(request):
     return render(request, 'entries/stores.html', context)
 
 def get_single_store(request, store_id):
-    entry_store = Store.objects.filter(id=store_id)
+    entry_store = Store.objects.filter(id=store_id)[0]
     name = entry_store.name or None
     items_in_store = GroceryEntry.objects.filter(store=entry_store)
     context = {

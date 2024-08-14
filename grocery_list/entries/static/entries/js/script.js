@@ -4,8 +4,8 @@ function filterListItems() {
     const selectedOption = filterColorSelectEl.value
     const groceryEntries = document.querySelectorAll('#groceries-list li')
     function hideIfNotColor(e) {
-        const importanceBlock = e.querySelector('span.importance-color')
-        const elementColorValue = importanceBlock.dataset.value
+        const importanceBlock = e.querySelector('div[data-color]')
+        const elementColorValue = importanceBlock.dataset.color
         if (elementColorValue !== selectedOption) e.hidden = true
         else e.hidden = false
     }
