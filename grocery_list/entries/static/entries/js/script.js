@@ -9,7 +9,9 @@ function filterListItems() {
     function showItems(j) {
         j.hidden = false
     }
-    if (selectedOption !== "No Filter") groceryEntries.forEach(hideIfNotColor)
+    if (selectedOption !== "No Filter") groceryEntries.forEach(
+        (e) => e.hidden = !e.querySelector(`div[data-color=${selectedOption}]`)
+    )
     else groceryEntries.forEach(showItems)
 }
 
