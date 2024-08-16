@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    command: gunicorn --workers=2 grocery_list.wsgi -b 0.0.0.0:8000
+    expose:
+      - '8000'
+  nginx:
+    build: ./nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - web
